@@ -1,19 +1,21 @@
-name: server
+name: ci
 
 on: [push]
 
 jobs:
-  checks:
+  build:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        python-version: ["3.10"]
+      fail-fast: false
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.10"  # 必要に応じてバージョンを指定
+          architecture: "x64"
       - name: Install dependencies
         
         run: |
@@ -23,9 +25,6 @@ jobs:
           pip install poetry
           poetry config virtualenvs.create false
           poetry install
-          cd ..
-          pwd
-          ls -a
       - name: Test with pytest
         
         run:
