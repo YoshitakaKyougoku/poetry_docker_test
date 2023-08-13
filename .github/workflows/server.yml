@@ -20,9 +20,13 @@ jobs:
           AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
 
       - name: Install dependencies
+        
         run: |
+          pwd
+          ls -a
           python -m pip install --upgrade pip
-          pip install
+          python -m pip install pytest
+          pip install -r requirements.txt
       - name: Test with pytest
         
         run:
