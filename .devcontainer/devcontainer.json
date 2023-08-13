@@ -1,0 +1,10 @@
+{
+	"name": "python remote development",
+	"dockerComposeFile": "compose.yml",
+    "service": "app",
+    "workspaceFolder": "/app",
+	// リモート先のVS Codeにインストールする拡張機能
+	"extensions": [
+		"ms-python.python"
+	]
+}
