@@ -23,6 +23,9 @@ jobs:
           pip install poetry
           poetry config virtualenvs.create false
           poetry install
+          cd ..
+          pwd
+          ls -a
       - name: Test with pytest
         
         run:
