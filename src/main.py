@@ -7,8 +7,8 @@ correct_token = "correct_token"
 
 # 模擬ユーザーデータ
 dummy_user_db = {
-    "abcde12345": {"id": "abcde12345", "name": "Yamada", "email_address": "yamada@example.com"},
-    "fghij67890": {"id": "fghij67890", "name": "Tanaka", "email_address": "tanaka@example.com"},
+    "abcde12345": {"id": 12345, "name": "Yamada"},
+    "fghij67890": {"id": 67890, "name": "Tanaka"},
 }
 
 class Booking(BaseModel):
@@ -20,9 +20,9 @@ class Booking(BaseModel):
     end_datetime: datetime.datetime
     
 class User(BaseModel):
-    id: str
-    name: str
-    email_address: str
+    user_id: int
+    user_name: str = Field(max_length=12)
+    
     
 class Room(BaseModel):
     room_id: int
@@ -37,7 +37,7 @@ async def get_root():
 
 # ユーザー情報取得API
 @app.get("/users/{user_id}", response_model=User)
-async def get_user(user_id: str, token: str = Header(...)):
+async def get_user(user_id: int, token: str = Header(...)):
     # トークン不正時
     if token != correct_token:
         raise HTTPException(
