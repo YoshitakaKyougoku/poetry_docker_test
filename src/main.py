@@ -7,8 +7,8 @@ correct_token = "correct_token"
 
 # 模擬ユーザーデータ
 dummy_user_db = {
-    "abcde12345": {"id": 12345, "name": "Yamada"},
-    "fghij67890": {"id": 67890, "name": "Tanaka"},
+    12345: {"id": 12345, "name": "Yamada"},
+    67890: {"id": 67890, "name": "Tanaka"},
 }
 
 class Booking(BaseModel):
