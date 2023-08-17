@@ -8,13 +8,15 @@ def test_read_root():
     assert response.status_code == 200
     assert response.json() == {"message": "Hello, world!"}
     
-def test_users():
-    response = client.post(
-        "/users",
-        headers = {"users": "User"},
-        json = {"user_id": 55678, "user_name": "京極慶高"})
+def test_get_user_NR001():
+    response = client.get(
+        "/users/abcde12345", headers={"token": "correct_token"})
+    # レスポンス検証
+    # ステータスコード
     assert response.status_code == 200
+    # レスポンスボディ
     assert response.json() == {
-        "user_id": 55678,
-        "user_name": "京極慶高",
+        "id": "abcde12345",
+        "name": "Yamada",
+        "email_address": "yamada@example.com",
     }

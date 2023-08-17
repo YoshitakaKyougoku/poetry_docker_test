@@ -2,6 +2,15 @@ from fastapi import FastAPI
 import datetime
 from pydantic import BaseModel, Field
 
+# 正常トークン
+correct_token = "correct_token"
+
+# 模擬ユーザーデータ
+dummy_user_db = {
+    "abcde12345": {"id": "abcde12345", "name": "Yamada", "email_address": "yamada@example.com"},
+    "fghij67890": {"id": "fghij67890", "name": "Tanaka", "email_address": "tanaka@example.com"},
+}
+
 class Booking(BaseModel):
     booking_id: int
     user_id: int
@@ -25,6 +34,14 @@ app = FastAPI()
 async def get_root():
     return {'message': 'Hello, world!'}
 
-@app.post('/users')
-async def users(users: User):
-    return {"users": users}
+# ユーザー情報取得API
+@app.get("/users/{user_id}", response_model=User)
+async def get_user(user_id: str, token: str = Header(...)):
+    # トークン不正時
+    if token != correct_token:
+        raise HTTPException(
+            status_code=400, detail="token_verification_failed")
+    # ユーザー非存在時
+    if user_id not in dummy_user_db:
+        raise HTTPException(status_code=404, detail="user_not_found")
+    return dummy_user_db[user_id]
