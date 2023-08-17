@@ -37,7 +37,7 @@ async def get_root():
 
 # ユーザー情報取得API
 @app.get("/users/{user_id}", response_model=User)
-async def get_user(user_id: int, token: str = Header(...)):
+async def get_user(user_id: str, token: str = Header(...)):
     # トークン不正時
     if token != correct_token:
         raise HTTPException(
