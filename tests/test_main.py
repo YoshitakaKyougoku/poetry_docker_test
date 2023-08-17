@@ -16,8 +16,8 @@ def test_get_user_NR001():
     assert response.status_code == 200
     # レスポンスボディ
     assert response.json() == {
-        "id": 12345,
-        "name": "Yamada",
+        "user_id": 12345,
+        "user_name": "Yamada",
     }
     
 # ユーザー情報取得API 異常系テスト
