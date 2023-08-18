@@ -16,6 +16,7 @@ jobs:
         with:
           python-version: "3.10"  # 必要に応じてバージョンを指定
           architecture: "x64"
+          cache: 'pip'
         env:
           AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
 
