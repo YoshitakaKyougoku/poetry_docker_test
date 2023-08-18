@@ -18,6 +18,7 @@ requests = "^2.31.0"
 pytest = "^7.4.0"
 httpx = "^0.24.1"
 sqlalchemy = "^2.0.19"
+streamlit = "^1.25.0"
 
 
 [build-system]
