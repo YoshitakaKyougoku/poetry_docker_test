@@ -3,10 +3,8 @@ from src.main import app
 
 client = TestClient(app)
 
-def test_read_root():
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"message": "Hello, world!"}
+# Read
+# ユーザー情報取得API 正常系テスト
     
 def test_get_user_NR001():
     response = client.get(
@@ -35,3 +33,5 @@ def test_get_user_ABR002():
         "/users/hogefuga", headers={"token": "correct_token"})
     assert response.status_code == 404
     assert response.json() == {"detail": "user_not_found"}
+    
+# Create

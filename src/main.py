@@ -61,16 +61,16 @@ async def read_all_booking(skip: int = 0, limit: int = 100, db: Session = Depend
 
 # Create
 # ユーザー登録API
-@app.post("users", response_model=schemas.User)
+@app.post("/users", response_model=schemas.User)
 async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 # 会議室登録API
-@app.post("rooms", response_model=schemas.Room)
+@app.post("/rooms", response_model=schemas.Room)
 async def create_room(room: schemas.CreateRoom, db: Session = Depends(get_db)):
     return crud.create_room(db=db, room=room)
 
 # 予約登録API
-@app.post("bookings", response_model=schemas.Booking)
+@app.post("/bookings", response_model=schemas.Booking)
 async def create_booking(booking: schemas.CreateBooking, db: Session = Depends(get_db)):
     return crud.create_booking(db=db, booking=booking)
