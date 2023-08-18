@@ -35,3 +35,14 @@ def test_get_user_ABR002():
     assert response.json() == {"detail": "user_not_found"}
     
 # Create
+# 正常系テスト
+def test_create_user():
+    response = client.post(
+        "/users",
+        json={"user_name": "kyoukyou"}
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "user_id": 3,
+        "user_name": "kyoukyou"
+    }
