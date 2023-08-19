@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from sql_app import crud, models, schemas
 from sql_app.database import engine, SessionLocal
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -19,6 +20,17 @@ dummy_user_db = {
 
 app = FastAPI()
 
+# CORS設定を行う
+origins = ["http://localhost:3000"]  # 許可するオリジンを指定
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],  # すべてのHTTPメソッドを許可
+    allow_headers=["*"],  # すべてのヘッダーを許可
+    allow_credentials=True,  # クレデンシャル情報の送信を許可（必要に応じて）
+    expose_headers=["Content-Disposition"],  # クライアントに公開するヘッダーを指定（必要に応じて）
+)
 def get_db():
     db = SessionLocal()
     try:
