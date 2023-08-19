@@ -6,6 +6,19 @@ from . import models, schemas
 def get_all_user(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
 
+# ユーザー情報
+def get_user(db: Session, user_id: int):
+    '''
+    # トークン不正時
+    if token != correct_token:
+        raise HTTPException(
+            status_code=400, detail="token_verification_failed")
+    # ユーザー非存在時
+    if user_id not in dummy_user_db:
+        raise HTTPException(status_code=404, detail="user_not_found")
+    '''
+    return db.query(models.User).filter(models.User.user_id == user_id).first()
+
 # 会議室一覧
 def get_all_room(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Room).offset(skip).limit(limit).all()
@@ -44,3 +57,28 @@ def create_booking(db: Session, booking: schemas.CreateBooking):
     db.commit()
     db.refresh(db_booking)
     return db_booking
+
+# Update
+# ユーザー名更新
+def update_user_name(db: Session, user: schemas.User):
+    db_user = db.query(models.User).filter(models.User.user_id == user.user_id).first()
+    if db_user:
+        # 更新する値を辞書から取得して、レコードの属性にセット
+        
+        setattr(db_user, "user_name", user.user_name)
+        
+        # トランザクションをコミットして変更をデータベースに反映
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    return None
+
+# Delete
+# ユーザー削除
+def delete_user(db: Session, user: schemas.User):
+    db_user = db.query(models.User).filter(models.User.user_id == user.user_id).first()
+    if db_user:
+        db.delete(db_user)
+        db.commit()
+        return db_user
+    return None

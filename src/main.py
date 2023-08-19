@@ -51,15 +51,9 @@ async def read_all_user(skip: int = 0, limit: int = 100, db: Session = Depends(g
 
 # ユーザー情報取得API
 @app.get("/users/{user_id}", response_model=schemas.User)
-async def get_user(user_id: str, token: str = Header(...)):
-    # トークン不正時
-    if token != correct_token:
-        raise HTTPException(
-            status_code=400, detail="token_verification_failed")
-    # ユーザー非存在時
-    if user_id not in dummy_user_db:
-        raise HTTPException(status_code=404, detail="user_not_found")
-    return dummy_user_db[user_id]
+async def get_user(user_id: str ,db: Session = Depends(get_db)):
+    user_id = int(user_id)
+    return crud.get_user(db, user_id=user_id)
 
 # 会議室一覧取得API
 @app.get("/rooms", response_model=List[schemas.Room])
@@ -86,3 +80,15 @@ async def create_room(room: schemas.CreateRoom, db: Session = Depends(get_db)):
 @app.post("/bookings", response_model=schemas.Booking)
 async def create_booking(booking: schemas.CreateBooking, db: Session = Depends(get_db)):
     return crud.create_booking(db=db, booking=booking)
+
+# Update
+# ユーザー名更新API
+@app.post("/users/update", response_model=schemas.User)
+async def update_user_name(user: schemas.User, db: Session = Depends(get_db)):
+    return crud.update_user_name(db=db, user=user)
+
+# Delete
+# ユーザー削除API
+@app.post("/users/delete", response_model=schemas.User)
+async def delete_user(user: schemas.User, db: Session = Depends(get_db)):
+    return crud.delete_user(db=db, user=user)
