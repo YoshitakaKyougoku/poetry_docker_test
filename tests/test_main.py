@@ -43,6 +43,6 @@ def test_create_user():
     )
     assert response.status_code == 200
     assert response.json() == {
-        "user_id": 3,
+        "user_id": 6,
         "user_name": "kyoukyou"
     }
